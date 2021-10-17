@@ -24,14 +24,16 @@
 
         <div class="col-4">
             <h5 class="card-title text-center mb-5 fw-light fs-1">Sign Up Form</h5>
-            <form action="/signup" method="post">
+            <form th:action="@{/signup}" method="post">
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingUserName" placeholder="User Name" required name="username">
-                    <label for="floatingUserName" >User Name</label>
+                    <input type="text" class="form-control" id="floatingUserName" placeholder="User Name" required
+                           name="username">
+                    <label for="floatingUserName">User Name</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required name="password">
-                    <label for="floatingPassword" >Password</label>
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required
+                           name="password">
+                    <label for="floatingPassword">Password</label>
                 </div>
                 <hr class="my-4">
                 <div class="mb-3 d-grid">
@@ -40,14 +42,14 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="floatingFirstName"
                                        placeholder="First Name" name="firstName">
-                                <label for="floatingFirstName" >First Name</label>
+                                <label for="floatingFirstName">First Name</label>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="floatingLastName" placeholder="Last Name"
                                        required name="lastName">
-                                <label for="floatingLastName" >Last Name</label>
+                                <label for="floatingLastName">Last Name</label>
                             </div>
                         </div>
                     </div>

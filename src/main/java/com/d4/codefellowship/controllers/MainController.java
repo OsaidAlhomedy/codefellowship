@@ -31,7 +31,7 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/signin")
+    @GetMapping("/login")
     public String signInPage() {
         return "login";
     }
