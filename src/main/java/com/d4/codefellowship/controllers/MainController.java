@@ -5,6 +5,7 @@ import com.d4.codefellowship.models.FakeFace;
 import com.d4.codefellowship.repos.AppUserRepo;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
-
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -43,14 +42,9 @@ public class MainController {
 
     }
 
+
     @GetMapping("/")
-    public String splashPage(Model model) {
-//        if(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass() == ApplicationUser.class){
-//            ApplicationUser user = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            System.out.println(user.getUsername());
-//            System.out.println(SecurityContextHolder.getContext().getAuthentication().isAuthenticated());
-//            model.addAttribute("user",user);
-//        }
+    public String splashPage() {
         return "index";
     }
 
@@ -93,7 +87,6 @@ public class MainController {
         System.out.println(user.getPassword());
         ApplicationUser newUser = new ApplicationUser(user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getFirstName(), user.getLastName(), user.getDateOfBirth(), user.getBio());
         appUserRepo.save(newUser);
-//        SecurityContextHolder.clearContext();
         return new RedirectView("/");
     }
 }

@@ -57,8 +57,10 @@
     var userName = /*[[${user.username}]]*/ 'User';
     var userId = /*[[${user.id}]]*/ 0;
     var userElm = document.getElementById("userNameId");
+    var userLogOut = document.getElementById("userLogOutId");
     userElm.innerText = `Hello ${userName}`
     userElm.setAttribute("href",`/profile/${userId}`)
+    userLogOut.innerText = `Logout`
 
     /*]]>*/
 </script>
