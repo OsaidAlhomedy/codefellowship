@@ -9,14 +9,14 @@
 </head>
 <body>
 <div th:fragment="myHeader">
-        <ul class="nav justify-content-end p-3">
-            <li class="nav-item">
-                <a class="h3 nav-link text-light" href="#">Hello Osaid</a>
-            </li>
-            <li class="nav-item">
-                <a class="h3 nav-link text-light" href="#">Log Out</a>
-            </li>
-        </ul>
+    <ul class="nav justify-content-end p-3">
+        <li class="nav-item">
+            <a class="h3 nav-link text-light" id="userNameId" href="#"></a>
+        </li>
+        <li class="nav-item">
+            <a class="h3 nav-link text-light" th:href="@{/logout}">Log out</a>
+        </li>
+    </ul>
 </div>
 </body>
 </html>

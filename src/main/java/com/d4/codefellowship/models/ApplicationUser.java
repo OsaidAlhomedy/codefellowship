@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class ApplicationUser implements UserDetails {
@@ -24,6 +25,10 @@ public class ApplicationUser implements UserDetails {
     private String lastName;
     private String dateOfBirth;
     private String bio;
+
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
     public ApplicationUser() {
     }
@@ -47,9 +52,17 @@ public class ApplicationUser implements UserDetails {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
@@ -104,12 +117,12 @@ public class ApplicationUser implements UserDetails {
         this.bio = bio;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public List<Post> getPosts() {
+        return posts;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public Long getId() {
