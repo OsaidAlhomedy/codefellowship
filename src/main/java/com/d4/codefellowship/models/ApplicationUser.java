@@ -1,13 +1,13 @@
 package com.d4.codefellowship.models;
 
-import org.springframework.format.annotation.DateTimeFormat;
+
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.List;
+
+import java.util.*;
 
 @Entity
 public class ApplicationUser implements UserDetails {
@@ -27,8 +27,11 @@ public class ApplicationUser implements UserDetails {
     private String bio;
 
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "applicationUser")
     private List<Post> posts;
+
+    @OneToOne
+    private Role role;
 
     public ApplicationUser() {
     }
@@ -44,7 +47,17 @@ public class ApplicationUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(role.getName()));
+        return authorities;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
@@ -121,8 +134,8 @@ public class ApplicationUser implements UserDetails {
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
+    public void setPosts(Post post) {
+        this.posts.add(post);
     }
 
     public Long getId() {

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>User Profile</title>
@@ -23,17 +24,49 @@
         </svg>
     </div>
 
-    <div class="row vh-100 d-flex justify-content-center align-items-center backgroundContainer">
-        <div class="card" style="width: 18rem;">
-            <img th:src="${image}" class="card-img-top"
-                 alt="userPic">
-            <div class="card-body">
-                <h5 class="card-title" th:text="${user.firstName} + ' ' + ${user.lastName}"></h5>
-                <p class="card-text" th:text="'Date Of Birth : ' + ${user.dateOfBirth}"></p>
-                <p class="card-text" th:text="${user.bio}"></p>
+    <div class="row vh-100 d-flex justify-content-between align-items-center backgroundContainer">
+        <div class="col d-flex justify-content-center align-items-center">
+            <div class="card" style="width: 18rem;">
+                <img th:src="${image}" class="card-img-top"
+                     alt="userPic">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${user.firstName} + ' ' + ${user.lastName}"></h5>
+                    <p class="card-text" th:text="'Date Of Birth : ' + ${user.dateOfBirth}"></p>
+                    <p class="card-text" th:text="${user.bio}"></p>
 
+                </div>
             </div>
         </div>
+
+        <div class="col">
+
+<!--            <div  class="row">-->
+<!--                <div class="col">-->
+<!--                    <div th:each="post:${user.posts}" class="card" style="width: 18rem;">-->
+<!--                        <div class="card-body">-->
+<!--                            <p class="card-text" th:text="${post.body}"></p>-->
+<!--                            <p class="card-text" th:text="${post.createdAt}"></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <div class="row">
+                <form th:action="@{/post/{id}(id=${user.id})}" method="POST">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Post Something</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="body"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn text-light" style="background-color: rgb(207,51,40)">Publish
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
     </div>
 
     <div class="custom-shape-divider-bottom-1634475335">
@@ -43,17 +76,16 @@
     </div>
 </div>
 
-<script th:if="${user}" th:inline="javascript">
+<script th:if="${user}" th:inline="javascript" defer>
 
     /*<![CDATA[*/
 
     var userName = /*[[${user.username}]]*/ 'User';
-    var userId = /*[[${user.id}]]*/ 0;
     var userElm = document.getElementById("userNameId");
     var userLogOut = document.getElementById("userLogOutId");
     userElm.innerText = `Hello ${userName}`
-    userElm.setAttribute("href",`/profile/${userId}`)
-    userElm.innerText = `Logout`
+    userElm.setAttribute("href", `/profile`)
+    userLogOut.innerText = `Logout`
 
     /*]]>*/
 </script>

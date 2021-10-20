@@ -15,13 +15,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private AppUserRepo appUserRepo;
 
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        ApplicationUser checkUser = appUserRepo.findApplicationUserByUsername(username).orElseThrow();
-        
-//        Authentication authentication = new UsernamePasswordAuthenticationToken(checkUser, null, new ArrayList<>());
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        return checkUser;
+        return appUserRepo.findApplicationUserByUsername(username).orElseThrow();
     }
 }
