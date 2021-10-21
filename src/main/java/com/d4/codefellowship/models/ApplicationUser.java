@@ -134,8 +134,8 @@ public class ApplicationUser implements UserDetails {
         return posts;
     }
 
-    public void setPosts(Post post) {
-        this.posts.add(post);
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public Long getId() {

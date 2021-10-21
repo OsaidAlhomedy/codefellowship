@@ -72,6 +72,7 @@ public class MainController {
 
     @GetMapping("/profile")
     public String profileView(Model model) {
+        model.addAttribute("posts",postRepo.findAllByApplicationUserId(user().getId()));
         fakePics(model);
         return "profile";
     }

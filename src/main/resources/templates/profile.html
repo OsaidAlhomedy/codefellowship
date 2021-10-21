@@ -40,16 +40,16 @@
 
         <div class="col">
 
-<!--            <div  class="row">-->
-<!--                <div class="col">-->
-<!--                    <div th:each="post:${user.posts}" class="card" style="width: 18rem;">-->
-<!--                        <div class="card-body">-->
-<!--                            <p class="card-text" th:text="${post.body}"></p>-->
-<!--                            <p class="card-text" th:text="${post.createdAt}"></p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+            <div th:if="not${#lists.isEmpty(posts)}" class="row">
+                <div th:each="post:${posts}" class="col">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <p class="card-text" th:text="${post.body}"></p>
+                            <p class="card-text" th:text="${post.createdAt}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <form th:action="@{/post/{id}(id=${user.id})}" method="POST">
