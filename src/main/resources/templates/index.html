@@ -15,6 +15,7 @@
 
 
     <div class="headerr" th:insert="header.html :: myHeader"></div>
+
     <div class="custom-shape-divider-top-1634475409">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M1200 0L0 0 598.97 114.72 1200 0z" class="shape-fill"></path>
@@ -33,7 +34,7 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-4">
                     <div class="row">
-                        <a class="btn btn-outline-secondary" href="/signin">Sign In</a>
+                        <a class="btn btn-outline-secondary" href="/login">Sign In</a>
                     </div>
                 </div>
 
@@ -41,12 +42,28 @@
 
         </div>
     </div>
+
     <div class="custom-shape-divider-bottom-1634475335">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M1200 0L0 0 598.97 114.72 1200 0z" class="shape-fill"></path>
         </svg>
     </div>
 </div>
+
+<script th:if="${user}" th:inline="javascript">
+
+    /*<![CDATA[*/
+
+    var userName = /*[[${user.username}]]*/ 'User';
+    var userId = /*[[${user.id}]]*/ 0;
+    var userElm = document.getElementById("userNameId");
+    var userLogOut = document.getElementById("userLogOutId");
+    userElm.innerText = `Hello ${userName}`
+    userElm.setAttribute("href",`/profile`)
+    userLogOut.innerText = `Logout`
+
+    /*]]>*/
+</script>
 
 </body>
 </html>

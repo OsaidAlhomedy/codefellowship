@@ -1,3 +1,6 @@
+html{
+  overflow: hidden;
+}
 .custom-shape-divider-bottom-1634475335 {
   position: absolute;
   bottom: 0;
@@ -12,7 +15,7 @@
   position: relative;
   display: block;
   width: calc(300% + 1.3px);
-  height: 250px;
+  height: 200px;
 }
 
 .custom-shape-divider-bottom-1634475335 .shape-fill {
@@ -22,8 +25,8 @@
 .headerr{
   position: relative;
   z-index: 20;
+  margin-bottom: -50px;
 }
-
 
 
 .custom-shape-divider-top-1634475409 {
@@ -40,7 +43,7 @@
   position: relative;
   display: block;
   width: calc(300% + 1.3px);
-  height: 250px;
+  height: 200px;
 }
 
 .custom-shape-divider-top-1634475409 .shape-fill {
