@@ -6,7 +6,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-
 import java.util.*;
 
 @Entity
@@ -17,8 +16,10 @@ public class ApplicationUser implements UserDetails {
     @Column(name = "id", nullable = false)
     private Long id;
 
+
     @Column(unique = true)
     private String username;
+
 
     private String password;
     private String firstName;
@@ -32,6 +33,16 @@ public class ApplicationUser implements UserDetails {
 
     @OneToOne
     private Role role;
+
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinTable(name = "followings_followers",
+            joinColumns = @JoinColumn(name = "followings_id"),
+            inverseJoinColumns = @JoinColumn(name = "followers_id"))
+    private Set<ApplicationUser> followings = new HashSet<>();
+
+    @ManyToMany(mappedBy = "followings")
+    private Set<ApplicationUser> followers = new HashSet<>();
+
 
     public ApplicationUser() {
     }
@@ -96,6 +107,23 @@ public class ApplicationUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    public Set<ApplicationUser> getFollowings() {
+        return followings;
+    }
+
+    public void setFollowings(Set<ApplicationUser> followings) {
+        this.followings = followings;
+    }
+
+    public Set<ApplicationUser> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<ApplicationUser> followers) {
+        this.followers = followers;
     }
 
     public String getFirstName() {

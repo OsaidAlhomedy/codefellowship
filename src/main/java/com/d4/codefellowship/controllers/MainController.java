@@ -14,19 +14,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.transaction.Transactional;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -73,8 +73,16 @@ public class MainController {
     @GetMapping("/profile")
     public String profileView(Model model) {
         model.addAttribute("posts",postRepo.findAllByApplicationUserId(user().getId()));
-        fakePics(model);
         return "profile";
+    }
+
+    @GetMapping("/profile/{user_profile_id}")
+    public String profileUserView(@PathVariable Long user_profile_id, Model model) {
+        ApplicationUser profileUser = appUserRepo.findById(user_profile_id).orElseThrow();
+        List<Post> posts = postRepo.findAllByApplicationUserId(user_profile_id);
+        model.addAttribute("profileUser",profileUser);
+        model.addAttribute("profilePosts",posts);
+        return "oneprofile";
     }
 
 
@@ -102,25 +110,51 @@ public class MainController {
     }
 
 
-    private void fakePics(Model model) {
-        try {
-            URL url = new URL("https://fakeface.rest/face/json?minimum_age=16&maximum_age=25");
+//    @GetMapping("/feed")
+//    public String feedView() {
+//
+//
+//    }
 
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setConnectTimeout(5000);
-            InputStreamReader responseStream = new InputStreamReader(connection.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(responseStream);
-            String data = bufferedReader.readLine();
-            bufferedReader.close();
+    @Transactional
+    @PostMapping("/follow/{profileId}")
+    public RedirectView follow(@PathVariable Long profileId){
 
-            Gson gson = new Gson();
-            FakeFace fakeFace = gson.fromJson(data, FakeFace.class);
-            model.addAttribute("image", fakeFace.getImage_url());
+        System.out.println(profileId);
+
+        ApplicationUser loggedInUser = user();
+        ApplicationUser aboutToBeFollowedUser = appUserRepo.findById(profileId).orElseThrow();
 
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        loggedInUser.getFollowings().add(aboutToBeFollowedUser);
+        appUserRepo.save(loggedInUser);
+        System.out.println(loggedInUser.getFollowings());
 
-        }
+        return new RedirectView("/profile/"+aboutToBeFollowedUser.getId());
     }
+
+
+
+
+//    private void fakePics(Model model) {
+//        try {
+//            URL url = new URL("https://fakeface.rest/face/json?minimum_age=16&maximum_age=25");
+//
+//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//            connection.setConnectTimeout(5000);
+//            InputStreamReader responseStream = new InputStreamReader(connection.getInputStream());
+//            BufferedReader bufferedReader = new BufferedReader(responseStream);
+//            String data = bufferedReader.readLine();
+//            bufferedReader.close();
+//
+//            Gson gson = new Gson();
+//            FakeFace fakeFace = gson.fromJson(data, FakeFace.class);
+//            model.addAttribute("image", fakeFace.getImage_url());
+//
+//
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//
+//        }
+//    }
 }
